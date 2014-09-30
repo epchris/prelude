@@ -4,6 +4,9 @@
 (setq mac-option-modifier 'super)
 
 ;; DASH integration
+;; Unset the prelude key
+(define-key prelude-mode-map (kbd "C-c d") nil)
+(define-key prelude-mode-map (kbd "C-c e") nil)
 (cond
  ((eq 'darwin system-type)
   (progn

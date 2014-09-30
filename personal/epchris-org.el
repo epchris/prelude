@@ -46,6 +46,7 @@
 (setq org-completion-use-ido t)
 
 (global-set-key (kbd "C-c a") 'org-agenda)
+(define-key prelude-mode-map (kbd "C-c o") nil)
 (global-set-key (kbd "C-c o f") 'org-switchb)
 
 (provide 'epchris-org)
