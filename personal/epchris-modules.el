@@ -1,6 +1,7 @@
 ;;; Stuff
 (prelude-require-packages
  '(
+   ag
    neotree
    molokai-theme
    rbenv

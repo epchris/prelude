@@ -2,6 +2,7 @@
 (setq sml/no-confirm-load-theme t)
 (sml/setup)
 (sml/apply-theme 'automatic)
+(setq x-select-enable-primary t)
 (setq x-select-enable-clipboard t)
 
 ;; Themes
