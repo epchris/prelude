@@ -11,6 +11,8 @@
 ;; Font
 (add-to-list 'default-frame-alist '(font . "Droid Sans Mono-11"))
 
+(setq-default truncate-lines t)
+
 (setq ns-use-srgb-colorspace t)
 (setq system-uses-terminfo nil)
 (prefer-coding-system 'utf-8)

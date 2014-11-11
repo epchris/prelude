@@ -95,5 +95,8 @@
           '(lambda ()
              (define-key yaml-mode-map (kbd "C-m") 'newline-and-indent)))
 
+(require 'epa-file)
+(epa-file-enable)
+
 (provide 'epchris-settings)
 ;;;
