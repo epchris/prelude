@@ -13,9 +13,12 @@
    dash-at-point
    zeal-at-point
    gist
-   persp-projectile
-   perspective
+   flymake
+   flymake-ruby
+;   persp-projectile
+;   perspective
    project-explorer
+   projectile-rails
    ))
 
 (provide 'epchris-modules)

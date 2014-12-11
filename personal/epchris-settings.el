@@ -25,8 +25,8 @@
  )
 
 ;; ROBE integration
-(global-set-key (kbd "C-c r j") 'robe-jump)
-(global-set-key (kbd "C-c r a") 'robe-ask)
+;;(global-set-key (kbd "C-c r j") 'robe-jump)
+;;(global-set-key (kbd "C-c r a") 'robe-ask)
 
 ;; Project Explorer
 (global-set-key [f8] 'project-explorer-open)
@@ -69,9 +69,12 @@
 
 
 ;; Projectile settings
-(persp-mode)
-(require 'persp-projectile)
+;(persp-mode)
+;;(require 'persp-projectile)
 (setq projectile-switch-project-action 'projectile-dired)
+(add-hook 'projectile-mode-hook 'projectile-rails-on)
+;; Turn off Rails keyword highlighting
+;;(setq projectile-rails-add-keywords nil)
 
 ;; Ruby settings
 (defun my-ruby-mode-hook ()
@@ -80,13 +83,15 @@
   (subword-mode +1)
   (setq dash-at-point-docset "ruby"))
 
-(add-hook 'ruby-mode-hook 'robe-mode)
+;;(add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'ruby-mode-hook 'my-ruby-mode-hook)
 (add-hook 'ruby-mode-hook 'rspec-mode)
-(add-hook 'robe-mode-hook 'ac-robe-setup)
-(add-hook 'robe-mode-hook 'ansi-color-for-comint-mode-on)
+(add-hook 'ruby-mode-hook 'flymake-ruby-load)
+;;(push 'company-robe company-backends)
+;;(add-hook 'robe-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)
-
+(add-hook 'after-init-hook 'inf-ruby-switch-setup)
+(setq ruby-deep-indent-paren nil)
 
 ;; YAML Mode
 (require 'yaml-mode)
@@ -97,6 +102,8 @@
 
 (require 'epa-file)
 (epa-file-enable)
+
+(setq prelude-clean-whitespace-on-save nil)
 
 (provide 'epchris-settings)
 ;;;
