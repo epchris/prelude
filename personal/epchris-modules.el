@@ -19,6 +19,7 @@
 ;   perspective
    project-explorer
    projectile-rails
+   helm
    ))
 
 (provide 'epchris-modules)
