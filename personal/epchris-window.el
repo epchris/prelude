@@ -6,7 +6,10 @@
 (setq x-select-enable-clipboard t)
 
 ;; Themes
-(load-theme 'molokai t)
+;;(load-theme 'molokai t)
+;;(setq prelude-theme 'zenburn)
+;; Fix current-line highlighting problems
+(set-face-foreground 'highlight nil)
 
 ;; Font
 (add-to-list 'default-frame-alist '(font . "Droid Sans Mono-11"))

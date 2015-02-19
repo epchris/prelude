@@ -45,7 +45,7 @@
 (global-set-key "\M-g" 'goto-line)
 
 ;; Line numbers and indentation
-(linum-mode t)
+(global-linum-mode t)
 (setq linum-format "%d ")
 (setq-default indent-tabs-mode nil) ;; Use spaces for tabs
 (setq standard-indent 2)
