@@ -88,6 +88,7 @@
   (setq standard-indent 2)
   (linum-on)
   (subword-mode +1)
+  (setq-local imenu-create-index-function 'ruby-imenu-create-index)
   (setq dash-at-point-docset "ruby"))
 
 ;;(add-hook 'ruby-mode-hook 'robe-mode)
@@ -97,7 +98,6 @@
 ;;(push 'company-robe company-backends)
 ;;(add-hook 'robe-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)
-(add-hook 'after-init-hook 'inf-ruby-switch-setup)
 (setq ruby-deep-indent-paren nil)
 
 ;; YAML Mode
