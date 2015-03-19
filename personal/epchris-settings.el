@@ -110,7 +110,5 @@
 (require 'epa-file)
 (epa-file-enable)
 
-(setq prelude-clean-whitespace-on-save nil)
-
 (provide 'epchris-settings)
 ;;;
