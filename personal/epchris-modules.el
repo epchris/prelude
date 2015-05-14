@@ -15,8 +15,8 @@
    gist
    flymake
    flymake-ruby
-;   persp-projectile
-;   perspective
+   persp-projectile
+   perspective
    project-explorer
    projectile-rails
    helm

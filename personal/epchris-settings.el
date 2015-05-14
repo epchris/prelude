@@ -40,8 +40,8 @@
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 
 ;; ROBE integration
-;;(global-set-key (kbd "C-c r j") 'robe-jump)
-;;(global-set-key (kbd "C-c r a") 'robe-ask)
+(global-set-key (kbd "C-c r j") 'robe-jump)
+(global-set-key (kbd "C-c r a") 'robe-ask)
 
 ;; Project Explorer
 (global-set-key [f8] 'project-explorer-open)
@@ -96,15 +96,17 @@
   (setq standard-indent 2)
   (linum-on)
   (subword-mode +1)
+  (local-set-key (kbd "C-M-f") 'ruby-forward-sexp)
+  (local-set-key (kbd "C-M-b") 'ruby-backward-sexp)
   (setq-local imenu-create-index-function 'ruby-imenu-create-index)
   (setq dash-at-point-docset "ruby"))
 
-;;(add-hook 'ruby-mode-hook 'robe-mode)
+(add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'ruby-mode-hook 'my-ruby-mode-hook)
 (add-hook 'ruby-mode-hook 'rspec-mode)
 (add-hook 'ruby-mode-hook 'flymake-ruby-load)
-;;(push 'company-robe company-backends)
-;;(add-hook 'robe-mode-hook 'ansi-color-for-comint-mode-on)
+(push 'company-robe company-backends)
+(add-hook 'robe-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)
 (setq ruby-deep-indent-paren nil)
 
