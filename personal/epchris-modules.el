@@ -13,6 +13,7 @@
    dash-at-point
    zeal-at-point
    gist
+   iedit
    flymake
    flymake-ruby
    persp-projectile

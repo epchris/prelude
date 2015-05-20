@@ -50,7 +50,7 @@
 (global-set-key (kbd "C-c c") 'org-capture)
 
 ;; Useful key strokes
-(global-set-key "\M-g" 'goto-line)
+;; (global-set-key "\M-g" 'goto-line)
 
 ;; Line numbers and indentation
 (global-linum-mode t)
@@ -82,10 +82,11 @@
     (shell-command-on-region (mark) (point) "xmllint --format -" (buffer-name) t)
     ))
 
+(require 'iedit)
 
 ;; Projectile settings
-;(persp-mode)
-;;(require 'persp-projectile)
+(persp-mode)
+(require 'persp-projectile)
 (setq projectile-switch-project-action 'projectile-dired)
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
 ;; Turn off Rails keyword highlighting
