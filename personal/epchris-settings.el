@@ -1,5 +1,5 @@
 ;;; Personal settings
-
+(setq prelude-flyspell nil)
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
 
@@ -99,6 +99,7 @@
   (subword-mode +1)
   (local-set-key (kbd "C-M-f") 'ruby-forward-sexp)
   (local-set-key (kbd "C-M-b") 'ruby-backward-sexp)
+  (local-set-key (kbd "RET") 'newline-and-indent)
   (setq-local imenu-create-index-function 'ruby-imenu-create-index)
   (setq dash-at-point-docset "ruby"))
 
