@@ -1,3 +1,53 @@
+;;; epchris-settings --- Personal packages
+
+;;; Commentary:
+;;; This is my own personal hook into Prelude, to pull in custom packages, and
+;;; set custom configuration
+
+;;; Code:
+
+;;; Packages
+(prelude-require-packages
+ '(
+   ag
+   ample-theme
+   molokai-theme
+   rbenv
+   robe
+   rspec-mode
+   slim-mode
+   smart-mode-line
+   dash
+   dash-at-point
+   zeal-at-point
+   flycheck
+   gist
+   iedit
+   multiple-cursors
+   origami
+   persp-projectile
+   perspective
+   project-explorer
+   projectile-rails
+   ))
+
+;;; UI Settings
+(setq x-select-enable-clipboard t)
+(add-to-list 'default-frame-alist '(font . "Hack-11"))
+(setq-default truncate-lines t)
+(setq ns-use-srgb-colorspace t)
+(setq system-uses-terminfo nil)
+(prefer-coding-system 'utf-8)
+
+;;; Smart Mode Line
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
+(sml/apply-theme 'automatic)
+;;; Theme settings
+(load-theme 'ample t t)
+(load-theme 'ample-flat t t)
+(enable-theme 'ample)
+
 ;;; Personal settings
 (require 'compile)
 (setq prelude-flyspell nil)
@@ -13,6 +63,7 @@
  ((eq 'darwin system-type)
   (progn
     (setq btsync_dir "~/BTSync")
+    (setq gdrive_dir "~/Google\ Drive")
     (global-set-key (kbd "C-c d") 'dash-at-point)
     (global-set-key (kbd "C-c e") 'dash-at-point-with-docset)
     (setq mac-command-modifier 'meta)
@@ -130,7 +181,6 @@
 (add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'ruby-mode-hook 'my-ruby-mode-hook)
 (add-hook 'ruby-mode-hook 'rspec-mode)
-(add-hook 'ruby-mode-hook 'flymake-ruby-load)
 (push 'company-robe company-backends)
 (add-hook 'robe-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)
@@ -141,8 +191,6 @@
 ;;
 (add-hook 'compilation-filter-hook
           (lambda () (ansi-color-process-output nil)))
-
-(add-hook 'coffee-mode-hook 'flymake-coffee-load)
 
 ;;
 ;; YAML Mode
@@ -157,17 +205,65 @@
 (require 'epa-file)
 (epa-file-enable)
 
+;; Multiple Cursors
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+;;; Origami Settings
 (require 'origami)
 (define-key origami-mode-map (kbd "C-c C-o o") 'origami-open-node)
 (define-key origami-mode-map (kbd "C-c C-o c") 'origami-close-node)
 (define-key origami-mode-map (kbd "C-c C-o t") 'origami-recursively-toggle-node)
 (define-key origami-mode-map (kbd "C-c C-o r") 'origami-reset)
 
+;;; Org-Mode Settings
+(require 'org)
+(setq org-directory (concat gdrive_dir "/OrgMode"))
+(setq org-todo-keywords
+      (quote ((sequence "TODO(t)" "NEXT(n)" "IN-PROGRESS(i)" "ASSIGNED(a)" "|" "DONE(d)")
+              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
+(setq org-todo-keyword-faces
+      (quote (("TODO" :foreground "red" :weight bold)
+              ("NEXT" :foreground "blue" :weight bold)
+              ("DONE" :foreground "forest green" :weight bold)
+              ("WAITING" :foreground "orange" :weight bold)
+              ("HOLD" :foreground "magenta" :weight bold)
+              ("CANCELLED" :foreground "forest green" :weight bold))))
+(setq org-todo-state-tags-triggers
+      (quote (("CANCELLED" ("CANCELLED" . t))
+              ("WAITING" ("WAITING" . t))
+              ("HOLD" ("WAITING") ("HOLD" . t))
+              (done ("WAITING") ("HOLD"))
+              ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
+              ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
+              ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
+(setq org-use-fast-todo-selection t)
+(setq org-default-notes-file (concat org-directory "notes.org"))
+(add-to-list 'org-agenda-files org-directory)
+
+;;; Capture templates
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline (concat org-directory "/tasks.org") "Tasks")
+         "* TODO %?\n%U\n%a\n")
+        ("j" "Journal" entry (file+datetree (concat org-directory "/notes.org"))
+         "* %?\nEntered on %U\n%i\n%a")))
+
+(setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                 (org-agenda-files :maxlevel . 9))))
+(setq org-refile-use-outline-path t)
+(setq org-outline-path-complete-in-steps nil)
+(setq org-refile-allow-creating-parent-nodes (quote confirm))
+(setq org-completion-use-ido t)
+
+(global-set-key (kbd "C-c a") 'org-agenda)
+(define-key prelude-mode-map (kbd "C-c o") nil)
+(global-set-key (kbd "C-c o f") 'org-switchb)
+
+;;; Zoning out
+(require 'zone)
+(zone-when-idle 120)
+
 (provide 'epchris-settings)
-;;;
