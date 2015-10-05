@@ -16,6 +16,10 @@
    iedit
    flymake
    flymake-ruby
+   flymake-jslint
+   flymake-coffee
+   multiple-cursors
+   origami
    persp-projectile
    perspective
    project-explorer
