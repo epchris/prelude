@@ -6,51 +6,33 @@
 
 ;;; Code:
 
+(setq ns-use-srgb-colorspace nil)
+
 ;;; Packages
 (prelude-require-packages
  '(
    ag
    ample-theme
-   molokai-theme
-   rbenv
-   robe
-   rspec-mode
-   slim-mode
-   smart-mode-line
    dash
    dash-at-point
-   zeal-at-point
    flycheck
    gist
    iedit
+   molokai-theme
    multiple-cursors
    origami
    persp-projectile
    perspective
    project-explorer
    projectile-rails
+   rbenv
+   robe
+   rspec-mode
+   scratch
+   slim-mode
+   smart-mode-line
+   zeal-at-point
    ))
-
-;;; UI Settings
-(setq x-select-enable-clipboard t)
-(add-to-list 'default-frame-alist '(font . "Hack-11"))
-(setq-default truncate-lines t)
-(setq ns-use-srgb-colorspace t)
-(setq system-uses-terminfo nil)
-(prefer-coding-system 'utf-8)
-
-;;; Smart Mode Line
-(setq sml/no-confirm-load-theme t)
-(sml/setup)
-(sml/apply-theme 'automatic)
-;;; Theme settings
-(load-theme 'ample t t)
-(load-theme 'ample-flat t t)
-(enable-theme 'ample)
-
-;;; Personal settings
-(require 'compile)
-(setq prelude-flyspell nil)
 
 ;; To support DASH integration, unset the prelude key bindings we want to use
 (define-key prelude-mode-map (kbd "C-c d") nil)
@@ -68,6 +50,7 @@
     (global-set-key (kbd "C-c e") 'dash-at-point-with-docset)
     (setq mac-command-modifier 'meta)
     (setq mac-option-modifier 'super)
+    (setq mouse-wheel-scroll-amount (quote (0.01)))
     )
   )
  ((eq 'gnu/linux system-type)
@@ -75,9 +58,32 @@
     (setq btsync_dir "~/btsync")
     (global-set-key (kbd "C-c d") 'zeal-at-point)
     (global-set-key (kbd "C-c e") 'dash-at-point-with-docset)
+    (setq ns-use-srgb-colorspace t)
     )
   )
  )
+
+;;; UI Settings
+(setq x-select-enable-clipboard t)
+(add-to-list 'default-frame-alist '(font . "Hack-14"))
+(setq-default truncate-lines t)
+(setq system-uses-terminfo nil)
+(prefer-coding-system 'utf-8)
+
+;;; Smart Mode Line
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
+(sml/apply-theme 'automatic)
+
+
+;;; Theme settings
+(load-theme 'ample t t)
+(load-theme 'ample-flat t t)
+(enable-theme 'ample)
+
+;;; Personal settings
+(require 'compile)
+(setq prelude-flyspell nil)
 
 ;;
 ;; HTML/Javascript/Web mode things
@@ -92,6 +98,7 @@
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
   (setq web-mode-markup-indent-offset 2)
+
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
 )
@@ -211,6 +218,20 @@
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+;; Magit Setting
+;; full screen magit-status
+(defadvice magit-status (around magit-fullscreen activate)
+  (window-configuration-to-register :magit-fullscreen)
+  ad-do-it
+  (delete-other-windows))
+
+(defun magit-quit-session ()
+  "Restores the previous window configuration and kills the magit buffer"
+  (interactive)
+  (kill-buffer)
+  (jump-to-register :magit-fullscreen))
+(define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
 
 ;;; Origami Settings
 (require 'origami)
