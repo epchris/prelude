@@ -7,12 +7,15 @@
 
 ;; Themes
 ;;(load-theme 'molokai t)
+(load-theme 'ample t t)
+(load-theme 'ample-flat t t)
+(enable-theme 'ample)
 ;;(setq prelude-theme 'zenburn)
 ;; Fix current-line highlighting problems
-(set-face-foreground 'highlight nil)
+;; (set-face-foreground 'highlight nil)
 
 ;; Font
-(add-to-list 'default-frame-alist '(font . "Droid Sans Mono-11"))
+(add-to-list 'default-frame-alist '(font . "Hack-11"))
 
 (setq-default truncate-lines t)
 

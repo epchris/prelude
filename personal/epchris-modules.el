@@ -2,6 +2,7 @@
 (prelude-require-packages
  '(
    ag
+   ample-theme
    neotree
    molokai-theme
    rbenv
