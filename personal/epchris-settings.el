@@ -13,8 +13,10 @@
  '(
    ag
    ample-theme
+   comment-dwim-2
    dash
    dash-at-point
+   expand-region
    flycheck
    gist
    iedit
@@ -31,7 +33,9 @@
    scratch
    slim-mode
    smart-mode-line
+   which-key
    zeal-at-point
+   smooth-scrolling
    ))
 
 ;; To support DASH integration, unset the prelude key bindings we want to use
@@ -147,7 +151,9 @@
         (setq beg (region-beginning) end (region-end))
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
-(global-set-key "\M-/" 'comment-or-uncomment-region-or-line)
+;; (global-set-key "\M-/" 'comment-or-uncomment-region-or-line)
+
+(global-set-key "\M-/" 'comment-dwim-2)
 
 ;;
 ;; XML Formatting method
@@ -292,5 +298,8 @@
 ;;; Zoning out
 (require 'zone)
 (zone-when-idle 120)
+
+;;; Which key, for command help
+(which-key-mode)
 
 (provide 'epchris-settings)
