@@ -193,6 +193,12 @@
 (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)
 (setq ruby-deep-indent-paren nil)
 
+(setenv "PATH"
+        (concat (getenv "HOME") "/.rbenv/shims:"
+                (getenv "HOME") "/.rbenv/bin:" (getenv "PATH")))
+(setq exec-path
+      (cons (concat (getenv "HOME") "/.rbenv/shims")
+            (cons (concat (getenv "HOME") "/.rbenv/bin") exec-path)))
 ;;
 ;; JS/Coffee mode
 ;;
@@ -242,7 +248,7 @@
 
 ;;; Org-Mode Settings
 (require 'org)
-(setq org-directory (concat gdrive_dir "/OrgMode"))
+;;(setq org-directory (concat gdrive_dir "/OrgMode"))
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "IN-PROGRESS(i)" "ASSIGNED(a)" "|" "DONE(d)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
