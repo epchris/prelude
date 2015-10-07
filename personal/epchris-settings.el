@@ -20,6 +20,7 @@
    flycheck
    gist
    iedit
+   iimage
    molokai-theme
    multiple-cursors
    origami
@@ -35,7 +36,6 @@
    smart-mode-line
    which-key
    zeal-at-point
-   smooth-scrolling
    ))
 
 ;; To support DASH integration, unset the prelude key bindings we want to use
@@ -118,11 +118,6 @@
 ;; Project Explorer
 ;;
 (global-set-key [f8] 'project-explorer-toggle)
-
-;;
-;; Org Capture
-;;
-(global-set-key (kbd "C-c c") 'org-capture)
 
 ;;
 ;; Line numbers and indentation
@@ -254,7 +249,7 @@
 
 ;;; Org-Mode Settings
 (require 'org)
-;;(setq org-directory (concat gdrive_dir "/OrgMode"))
+(setq org-directory "~/OrgMode")
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "IN-PROGRESS(i)" "ASSIGNED(a)" "|" "DONE(d)")
               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
@@ -274,15 +269,16 @@
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 (setq org-use-fast-todo-selection t)
-(setq org-default-notes-file (concat org-directory "notes.org"))
-(add-to-list 'org-agenda-files org-directory)
+;; (add-to-list 'org-agenda-files org-directory)
 
 ;;; Capture templates
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline (concat org-directory "/tasks.org") "Tasks")
          "* TODO %?\n%U\n%a\n")
         ("j" "Journal" entry (file+datetree (concat org-directory "/notes.org"))
-         "* %?\nEntered on %U\n%i\n%a")))
+         "* %?\nEntered on %U\n%i\n%a")
+        ("i" "Idea" entry (file+headline (concat org-directory "/ideas.org"))
+         "* %?\nEntered on %U")))
 
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
                                  (org-agenda-files :maxlevel . 9))))
@@ -291,9 +287,35 @@
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 (setq org-completion-use-ido t)
 
-(global-set-key (kbd "C-c a") 'org-agenda)
+(add-to-list 'iimage-mode-image-regex-alist
+             (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex
+                           "\\)\\]")  1))
+
+(defun org-toggle-iimage-in-org ()
+  "display images in your org file"
+  (interactive)
+  (if (face-underline-p 'org-link)
+      (set-face-underline-p 'org-link nil)
+    (set-face-underline-p 'org-link t))
+  (iimage-mode ‘toggle))
+
 (define-key prelude-mode-map (kbd "C-c o") nil)
+(global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c o f") 'org-switchb)
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key "\M-n" 'outline-next-visible-heading)
+            (local-set-key "\M-p" 'outline-previous-visible-heading)
+            ;; table
+            (local-set-key "\C-\M-w" 'org-table-copy-region)
+            (local-set-key "\C-\M-y" 'org-table-paste-rectangle)
+            (local-set-key "\C-\M-l" 'org-table-sort-lines)
+            ;; display images
+            (local-set-key "\M-I" 'org-toggle-iimage-in-org)
+            ;; fix tab
+            (local-set-key "\C-y" 'yank)))
 
 ;;; Zoning out
 (require 'zone)
