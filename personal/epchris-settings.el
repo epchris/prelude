@@ -287,10 +287,6 @@
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 (setq org-completion-use-ido t)
 
-(add-to-list 'iimage-mode-image-regex-alist
-             (cons (concat "\\[\\[file:\\(~?" iimage-mode-image-filename-regex
-                           "\\)\\]")  1))
-
 (defun org-toggle-iimage-in-org ()
   "display images in your org file"
   (interactive)
