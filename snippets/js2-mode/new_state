@@ -1,0 +1,18 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: new_state
+# key: new_state
+# binding: direct-keybinding
+# --
+this.state('${1:newStateName}', function() {
+  this.C(function(ctx) {
+    // Evaluate context and return default state
+  });
+
+  // Events
+  this.event('someEvent', function() {
+    // Respond to event
+  });
+
+  // Child states
+  $0
+});

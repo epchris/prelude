@@ -35,6 +35,7 @@
    slim-mode
    smart-mode-line
    which-key
+   yasnippet
    zeal-at-point
    ))
 
@@ -102,11 +103,17 @@
 (defun my-web-mode-hook ()
   "Hooks for Web mode."
   (setq web-mode-markup-indent-offset 2)
-
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
 )
 (add-hook 'web-mode-hook  'my-web-mode-hook)
+
+;; disable jshint since we prefer eslint checking
+(setq-default flycheck-disabled-checkers
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint)))
+;; use eslint with web-mode for jsx files
+(flycheck-add-mode 'javascript-eslint 'web-mode)
 
 ;;
 ;; ROBE integration
@@ -189,6 +196,8 @@
 (add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'ruby-mode-hook 'my-ruby-mode-hook)
 (add-hook 'ruby-mode-hook 'rspec-mode)
+(eval-after-load 'rspec-mode
+  '(rspec-install-snippets))
 (push 'company-robe company-backends)
 (add-hook 'robe-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'inf-ruby-mode-hook 'ansi-color-for-comint-mode-on)

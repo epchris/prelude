@@ -1,0 +1,10 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# contributor: Chris TenHarmsel <chris@tenharmsel.com>
+# name: Jasmine Describe Block
+# key: describe
+# group: Jasmine
+# binding: direct-keybinding
+# --
+describe('${1:when something}', function() {
+  $0
+});
